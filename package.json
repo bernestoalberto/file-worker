@@ -1,20 +1,19 @@
 {
-  "name": "file-worker",
-  "version": "1.0.0",
-  "description": "",
-  "main": "main.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "module",
-  "devDependencies": {
-    "@types/node": "^22.15.29"
-  },
-  "dependencies": {
-    "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
-  }
+	"name": "file-worker",
+	"version": "1.0.0",
+	"description": "",
+	"main": "main.ts",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"type": "module",
+	"devDependencies": {
+		"@types/node": "^22.15.29"
+	},
+	"dependencies": {
+		"typescript": "^5.8.3"
+	}
 }
