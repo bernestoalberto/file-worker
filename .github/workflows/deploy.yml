@@ -10,13 +10,25 @@ jobs:
       steps:
       - name: Write SSH keys
         run: |
-         install -m 600 -D /dev/null ~/.ssh/id_rsa
-         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-         host='${{secrets.SSH_HOST}}'
-         hosts="$(dig +short "$host" | grep -v '\.$' | sed -z 's|\n|,|g')$host"
-         ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
+          install -m 600 -D /dev/null ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+      
+          if [ -z "${{ secrets.SSH_HOSTNAME}}" ]; then
+            echo "Error: SSH_HOST is not defined."
+            exit 1
+          fi
+      
+          host="${{ secrets.SSH_HOSTNAME }}"
+          hosts="$(dig +short "$host" | grep -v '\.$' | sed -z 's|\n|,|g')$host"
+      
+          if [ -z "$hosts" ]; then
+            echo "Error: Failed to resolve hosts for $host."
+            exit 1
+          fi
+      
+          ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
       - name: connect and pull
-        run: ssh ${{secrets.SSH_USER}}@${{secrets.SSH_HOST}} "cd ${{secrets.WORK_DIR}}" && git checkout ${{secrets.MAIN_BRANCH}} && git pull 
+        run: ssh ${{secrets.SSH_USER}}@${{secrets.SSH_HOSTNAME}} "cd ${{secrets.WORK_DIR}}" && git checkout ${{secrets.MAIN_BRANCH}} && git pull 
       - name: cleanup  
         run: rm -rf ~/.ssh
        
