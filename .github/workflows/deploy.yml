@@ -12,6 +12,7 @@ jobs:
         run: |
           install -m 600 -D /dev/null ~/.ssh/id_rsa
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+            echo "${{ secrets.SSH_HOST }}"
       
           if [ -z "${{ secrets.SSH_HOST }}" ]; then
             echo "Error: SSH_HOST is not defined."
