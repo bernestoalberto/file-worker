@@ -1,8 +1,9 @@
-import * as fs from "node:fs";
+import fs from "node:fs";
 import path from "node:path";
 
 // Define your origin and destiny paths
-const ORIGIN_PATH = "/home/frodo/Videos/media_server";
+// const ORIGIN_PATH = "/home/frodo/Videos/media_server";
+const ORIGIN_PATH = "/src";
 const DESTINY_PATH = "/var/lib/minidlna/videos";
 
 /**
@@ -77,8 +78,6 @@ async function copyRecursive(
  */
 async function main() {
 	// --- Configuration ---
-	const originPath = ORIGIN_PATH; // ⬅️ Replace with your source path
-	const destinationPath = DESTINY_PATH; // ⬅️ Replace with your destination path
 	// ---------------------
 
 	// if (
@@ -91,22 +90,29 @@ async function main() {
 	// 	return;
 	// }
 
-	console.log(
-		`🚀 Starting copy from "${originPath}" to "${destinationPath}"...`
-	);
+	console.log(`🚀 Starting copy from "${ORIGIN_PATH}" to "${DESTINY_PATH}"...`);
 
 	try {
 		// Ensure origin path exists
-		await fs.access(originPath);
+		// await fs.access(ORIGIN_PATH);
+		fs.access(ORIGIN_PATH, fs.constants.F_OK | fs.constants.R_OK, (err) => {
+			if (err) {
+				console.error("No access:", err);
+				return;
+			}
+			console.error(
+				`❌ Error: Origin path "${ORIGIN_PATH}" does not exist or is not accessible.`
+			);
+		});
 	} catch (error) {
 		console.error(
-			`❌ Error: Origin path "${originPath}" does not exist or is not accessible.`
+			`❌ Error: Origin path "${ORIGIN_PATH}" does not exist or is not accessible.`
 		);
 		return;
 	}
 
 	try {
-		await copyRecursive(originPath, destinationPath);
+		await copyRecursive(ORIGIN_PATH, DESTINY_PATH);
 		console.log("✅ Copy process completed successfully!");
 	} catch (error) {
 		console.error("💥 Copy process failed.");

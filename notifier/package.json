@@ -1,0 +1,21 @@
+{
+	"dependencies": {
+		"@types/node": "^22.15.30",
+		"chokidar": "^4.0.3",
+		"dotenv": "^16.5.0",
+		"nodemailer": "^7.0.3",
+		"typescript": "^5.8.3"
+	},
+	"name": "notifier",
+	"version": "1.0.0",
+	"description": "A simple scripts to support the home media server",
+	"main": "main.ts",
+	"scripts": {
+		"run": "tsc.ts",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"type": "module"
+}
